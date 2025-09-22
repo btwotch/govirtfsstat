@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"govirtfsstat/stat"
+	"os"
 	"strconv"
 	"syscall"
 
@@ -24,7 +25,11 @@ func main() {
 			case syscall.S_IFDIR:
 				fmt.Println("dir")
 			case syscall.S_IFLNK:
-				fmt.Println("symlink")
+				bs, err := os.ReadFile(path)
+				if err != nil {
+					panic(err)
+				}
+				fmt.Printf("symlink to %s\n", string(bs))
 			case syscall.S_IFIFO:
 				fmt.Println("fifo")
 			case syscall.S_IFCHR:
