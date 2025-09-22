@@ -19,7 +19,10 @@ func main() {
 		Run: func(cmd *cobra.Command, args []string) {
 			path := args[0]
 
-			st := stat.Stat(path)
+			st, err := stat.Stat(path)
+			if err != nil {
+				panic(err)
+			}
 			fmt.Printf("st: %+v\n", st)
 			switch st.Mode & syscall.S_IFMT {
 			case syscall.S_IFDIR:
