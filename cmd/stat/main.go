@@ -35,6 +35,8 @@ func main() {
 				fmt.Println("regular file")
 			case syscall.S_IFSOCK:
 				fmt.Println("socket file")
+			default:
+				fmt.Printf("unknown type: %+v\n", st.Mode&syscall.S_IFMT)
 			}
 		},
 	}
