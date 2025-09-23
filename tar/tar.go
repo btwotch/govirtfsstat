@@ -35,6 +35,10 @@ func Untar(tarReader io.Reader, destDir string) error {
 }
 
 func UntarEntry(destDir string, hdr *tar.Header, tr *tar.Reader) error {
+	destDir, err := filepath.Abs(destDir)
+	if err != nil {
+		return fmt.Errorf("could not get absolute path of '%s': %w", destDir, err)
+	}
 	path := filepath.Join(destDir, hdr.Name)
 	if !strings.HasPrefix(path, destDir) {
 		path = filepath.Join(destDir, filepath.Base(hdr.Name))
