@@ -20,7 +20,10 @@ func main() {
 				panic(err)
 			}
 			defer tarReader.Close()
-			tar.Untar(tarReader, destPath)
+			err = tar.Untar(tarReader, destPath)
+			if err != nil {
+				panic(err)
+			}
 		},
 	}
 
