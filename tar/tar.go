@@ -80,6 +80,9 @@ func UntarEntryPath(path string, hdr *tar.Header, tr *tar.Reader) error {
 		}
 	}
 
+	if hdr.Typeflag == tar.TypeReg {
+		mode = mode | syscall.S_IFREG
+	}
 	if hdr.Typeflag == tar.TypeChar {
 		mode = mode | syscall.S_IFCHR
 	}
